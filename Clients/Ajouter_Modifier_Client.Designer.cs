@@ -411,7 +411,7 @@
             // 
             btnqut.FlatStyle = FlatStyle.Flat;
             btnqut.Image = Properties.Resources.Deconnecte;
-            btnqut.Location = new Point(768, 12);
+            btnqut.Location = new Point(742, 12);
             btnqut.Name = "btnqut";
             btnqut.Size = new Size(75, 44);
             btnqut.TabIndex = 28;

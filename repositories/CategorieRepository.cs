@@ -54,5 +54,6 @@ namespace C_Stocke.Repositories
                 _context.SaveChanges();
             }
         }
+      
     }
 }

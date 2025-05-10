@@ -16,7 +16,7 @@ namespace C_Stocke.Repositories
         }
 
         // Méthode GetAll qui inclut la catégorie
-       
+
         public IEnumerable<Produit> GetAll()
         {
             return _context.Produits.ToList();

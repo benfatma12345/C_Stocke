@@ -703,6 +703,16 @@ namespace C_Stocke.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Pictures_icon {
+            get {
+                object obj = ResourceManager.GetObject("Pictures-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap print_icon {
             get {
                 object obj = ResourceManager.GetObject("print-icon", resourceCulture);
@@ -736,6 +746,16 @@ namespace C_Stocke.Properties {
         internal static System.Drawing.Bitmap Recycle_iconaaa {
             get {
                 object obj = ResourceManager.GetObject("Recycle-iconaaa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Recycle_iconaaa1 {
+            get {
+                object obj = ResourceManager.GetObject("Recycle-iconaaa1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

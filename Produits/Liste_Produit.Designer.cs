@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             comboBox1 = new ComboBox();
             panel3 = new Panel();
             txtRechercher = new TextBox();
@@ -116,23 +116,23 @@
             // 
             // dataClinet
             // 
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(30, 28, 38);
-            dataGridViewCellStyle5.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = SystemColors.Window;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataClinet.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(30, 28, 38);
+            dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.Window;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataClinet.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataClinet.AutoGenerateColumns = false;
             dataClinet.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataClinet.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(30, 28, 38);
-            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = SystemColors.Window;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dataClinet.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(30, 28, 38);
+            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.Window;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataClinet.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataClinet.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataClinet.Columns.AddRange(new DataGridViewColumn[] { Column1, iDProduitDataGridViewTextBoxColumn, nomProduitDataGridViewTextBoxColumn, quantiteProduitDataGridViewTextBoxColumn, prixProduitDataGridViewTextBoxColumn, imageProduitDataGridViewTextBoxColumn, categorieDataGridViewTextBoxColumn });
             dataClinet.DataSource = produitBindingSource;
@@ -220,6 +220,7 @@
             btnImprimerTous.TabIndex = 19;
             btnImprimerTous.Text = "Imprimer toutes";
             btnImprimerTous.UseVisualStyleBackColor = false;
+            btnImprimerTous.Click += btnExel_Click;
             // 
             // btnImprime
             // 
@@ -243,15 +244,16 @@
             btnAfficher.FlatStyle = FlatStyle.Flat;
             btnAfficher.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAfficher.ForeColor = SystemColors.ControlLightLight;
-            btnAfficher.Image = Properties.Resources.Recycle_iconaaa;
+            btnAfficher.Image = Properties.Resources.Pictures_icon;
             btnAfficher.ImageAlign = ContentAlignment.MiddleLeft;
             btnAfficher.Location = new Point(858, 25);
             btnAfficher.Margin = new Padding(4, 3, 4, 3);
             btnAfficher.Name = "btnAfficher";
             btnAfficher.Size = new Size(251, 67);
             btnAfficher.TabIndex = 17;
-            btnAfficher.Text = "Actualisation";
+            btnAfficher.Text = "Afficher Photo";
             btnAfficher.UseVisualStyleBackColor = false;
+            btnAfficher.Click += btnafficherphoto_Click;
             // 
             // btnSuppP
             // 
@@ -259,6 +261,7 @@
             btnSuppP.FlatStyle = FlatStyle.Flat;
             btnSuppP.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSuppP.ForeColor = SystemColors.ControlLightLight;
+            btnSuppP.Image = Properties.Resources.Button_Delete_icon;
             btnSuppP.ImageAlign = ContentAlignment.MiddleLeft;
             btnSuppP.Location = new Point(560, 25);
             btnSuppP.Margin = new Padding(4, 3, 4, 3);
@@ -275,6 +278,7 @@
             btnModifC.FlatStyle = FlatStyle.Flat;
             btnModifC.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnModifC.ForeColor = SystemColors.ControlLightLight;
+            btnModifC.Image = Properties.Resources.Recycle_iconaaa1;
             btnModifC.ImageAlign = ContentAlignment.MiddleLeft;
             btnModifC.Location = new Point(275, 25);
             btnModifC.Margin = new Padding(4, 3, 4, 3);

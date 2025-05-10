@@ -8,13 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace C_Stocke.RAP
+namespace C_Stocke.Produits
 {
-    public partial class FRM_Rapport : Form
+    public partial class Photo_Produit : Form
     {
-        public FRM_Rapport()
+       
+        public Photo_Produit()
         {
             InitializeComponent();
+        }
+
+        private void btnquitte_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

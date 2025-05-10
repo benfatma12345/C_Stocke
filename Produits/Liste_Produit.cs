@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using C_Stocke.Entities;
 using C_Stocke.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-
+using OfficeOpenXml;
 namespace C_Stocke.Produits
 {
     public partial class Liste_Produit : UserControl
@@ -141,7 +142,7 @@ namespace C_Stocke.Produits
             }
         }
 
-       
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             var produits = _produitRepo.GetAll().AsQueryable();
@@ -203,6 +204,118 @@ namespace C_Stocke.Produits
             {
                 dataClinet.EndEdit();
             }
+        }
+
+
+        private void btnExel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var produits = _produitRepo.GetAll().ToList();
+
+                using (var saveDialog = new SaveFileDialog())
+                {
+                    saveDialog.Filter = "Fichiers CSV (*.csv)|*.csv";
+                    saveDialog.FileName = $"Export_Produits_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+                    if (saveDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        using (var writer = new StreamWriter(saveDialog.FileName))
+                        {
+                            writer.WriteLine("ID;Nom;Quantité;Prix;Catégorie");
+
+                            foreach (var p in produits)
+                            {
+                                writer.WriteLine(
+                                    $"{p.ID_Produit};" +
+                                    $"{p.Nom_Produit?.Replace(";", "")};" +
+                                    $"{p.Quantite_Produit};" +
+                                    $"{p.Prix_Produit};" +
+                                    $"{p.Categorie?.Nom_Categorie?.Replace(";", "") ?? "N/A"}");
+                            }
+                        }
+
+                        MessageBox.Show("Export CSV réussi!", "Succès",
+                                       MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur: {ex.Message}", "Erreur",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+        private string SelectVerif()
+        {
+            int NombreligneSelect = 0;
+
+            for (int i = 0; i < dataClinet.Rows.Count; i++)
+            {
+                if (dataClinet.Rows[i].Cells[0].Value != null && (bool)dataClinet.Rows[i].Cells[0].Value == true)
+                {
+                    NombreligneSelect++; // Incrémenter le compteur
+                }
+            }
+
+            if (NombreligneSelect == 0)
+            {
+                return "Selectionner Produit";
+            }
+
+            if (NombreligneSelect > 1)
+            {
+                return "Selectionner Seulement 1 Produit";
+            }
+
+            return null; // Tout est bon
+        }
+
+        private void btnafficherphoto_Click(object sender, EventArgs e)
+        {
+            Produit PR = new Produit();
+
+            if (SelectVerif() != null)
+            {
+                MessageBox.Show(SelectVerif(), "Selectionner", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                for (int i = 0; i < dataClinet.Rows.Count; i++)
+                {
+                        if (dataClinet.Rows[i].Cells[0].Value != null && (bool)dataClinet.Rows[i].Cells[0].Value == true)
+                        {
+                            int MYIDSELECT = (int)dataClinet.Rows[i].Cells[1].Value;
+                            PR = _produitRepo.GetAll().SingleOrDefault(s => s.ID_Produit == MYIDSELECT);
+
+                            if (PR != null && !string.IsNullOrEmpty(PR.Image_Produit))
+                            {
+                                try
+                                {
+                                    byte[] imageBytes = Convert.FromBase64String(PR.Image_Produit);
+                                    MemoryStream ms = new MemoryStream(imageBytes);
+
+                                    Photo_Produit frmP = new Photo_Produit();
+                                    frmP.ImageProduit.SizeMode = PictureBoxSizeMode.Zoom; // important
+                                    frmP.ImageProduit.Image = Image.FromStream(ms);
+                                    frmP.ShowDialog(); // Affiche la fenêtre
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Erreur image : {ex.Message}");
+                                }
+                            }
+                        }
+                    }
+
+                
+            }
+        }
+
+        private void btnAfficher_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

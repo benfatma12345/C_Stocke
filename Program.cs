@@ -30,6 +30,7 @@ namespace C_Stocke
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<GestionStockDbContext>();
                 dbContext.Database.EnsureCreated();
+                dbContext.Seed(); // Ajoutez cette ligne
             }
 
             // Lancer le formulaire de connexion
