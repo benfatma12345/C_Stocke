@@ -8,6 +8,7 @@ using C_Stocke.Auth;
 using C_Stocke.Clients;
 using C_Stocke.Categories;
 using C_Stock;
+using C_Stocke.Commandes;
 
 namespace C_Stocke
 {
@@ -56,11 +57,13 @@ namespace C_Stocke
             services.AddScoped< ClientRepository>();
             services.AddScoped<ProduitRepository>();
             services.AddScoped<CategorieRepository>();
+            services.AddScoped<CommandeRepository>();
 
             // Enregistrement des UserControls
             services.AddTransient<UserControlClient>();
             services.AddTransient<Liste_Produit>();
             services.AddTransient<UserCategori>();
+            services.AddTransient<UserCommande>();
 
             // Enregistrement des Forms  // Enregistrement des Forms
             services.AddTransient<Connextion>();

@@ -211,5 +211,10 @@ namespace C_Stocke.Clients
                 MessageBox.Show("Veuillez sélectionner un client à supprimer");
             }
         }
+
+        private void dataClinet_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

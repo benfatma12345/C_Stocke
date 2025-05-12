@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using C_Stocke.Entities;
 using C_Stocke.Repositories;
@@ -29,6 +30,7 @@ namespace C_Stocke.Produits
             _serviceProvider = serviceProvider;
             _produitRepo = serviceProvider.GetRequiredService<ProduitRepository>();
             InitializePlaceholder();
+            dataClinet.CellFormatting += dataClinet_CellFormatting;
         }
 
         private void InitializePlaceholder()
@@ -271,6 +273,15 @@ namespace C_Stocke.Produits
 
             return null; // Tout est bon
         }
+        private bool IsBase64String(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return false;
+
+            // Vérifier si la chaîne contient des caractères valides pour Base64
+            str = str.Trim();
+            return (str.Length % 4 == 0) && Regex.IsMatch(str, @"^[a-zA-Z0-9\+/]*={0,2}$");
+        }
 
         private void btnafficherphoto_Click(object sender, EventArgs e)
         {
@@ -278,20 +289,23 @@ namespace C_Stocke.Produits
 
             if (SelectVerif() != null)
             {
-                MessageBox.Show(SelectVerif(), "Selectionner", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SelectVerif(), "Sélectionner", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 for (int i = 0; i < dataClinet.Rows.Count; i++)
                 {
-                        if (dataClinet.Rows[i].Cells[0].Value != null && (bool)dataClinet.Rows[i].Cells[0].Value == true)
-                        {
-                            int MYIDSELECT = (int)dataClinet.Rows[i].Cells[1].Value;
-                            PR = _produitRepo.GetAll().SingleOrDefault(s => s.ID_Produit == MYIDSELECT);
+                    if (dataClinet.Rows[i].Cells[0].Value != null && (bool)dataClinet.Rows[i].Cells[0].Value == true)
+                    {
+                        int MYIDSELECT = (int)dataClinet.Rows[i].Cells[1].Value;
+                        PR = _produitRepo.GetAll().SingleOrDefault(s => s.ID_Produit == MYIDSELECT);
 
-                            if (PR != null && !string.IsNullOrEmpty(PR.Image_Produit))
+                        if (PR != null && !string.IsNullOrEmpty(PR.Image_Produit))
+                        {
+                            try
                             {
-                                try
+                                // Vérifier si l'image est en Base64 valide
+                                if (IsBase64String(PR.Image_Produit))
                                 {
                                     byte[] imageBytes = Convert.FromBase64String(PR.Image_Produit);
                                     MemoryStream ms = new MemoryStream(imageBytes);
@@ -301,18 +315,47 @@ namespace C_Stocke.Produits
                                     frmP.ImageProduit.Image = Image.FromStream(ms);
                                     frmP.ShowDialog(); // Affiche la fenêtre
                                 }
-                                catch (Exception ex)
+                                else
                                 {
-                                    MessageBox.Show($"Erreur image : {ex.Message}");
+                                    MessageBox.Show("L'image encodée n'est pas au format Base64 valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
+                            }
+                            catch (FormatException ex)
+                            {
+                                MessageBox.Show($"Erreur lors du décodage de l'image : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
-
-                
+                }
             }
         }
 
+        private void dataClinet_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Vérifie si on est sur la colonne de la quantité
+            if (dataClinet.Columns[e.ColumnIndex].DataPropertyName == "Quantite_Produit")
+            {
+                var produit = dataClinet.Rows[e.RowIndex].DataBoundItem as Produit;
+                if (produit != null)
+                {
+                    if (produit.Quantite_Produit == 0)
+                    {
+                        e.CellStyle.BackColor = Color.Red;
+                        e.CellStyle.ForeColor = Color.White;
+                    }
+                    else if (produit.Quantite_Produit <= 5)
+                    {
+                        e.CellStyle.BackColor = Color.Gold;
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        e.CellStyle.BackColor = Color.LightGreen;
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
+                }
+            }
+        }
         private void btnAfficher_Click_1(object sender, EventArgs e)
         {
 

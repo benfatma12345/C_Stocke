@@ -79,6 +79,30 @@ namespace C_Stocke.Context
 
                 SaveChanges();
             }
+
+
+            if (!Produits.Any())
+            {
+                Produits.AddRange(
+                    new Produit
+                    {
+                        Nom_Produit = "Body Bébé Coton",
+                        Prix_Produit = 9.99m,
+                        Quantite_Produit = 100,
+                        ID_CATEGORIE = vetements.ID_CATEGORIE
+                    },
+                    new Produit
+                    {
+                        Nom_Produit = "Peluche Lapin",
+                        Prix_Produit = 14.50m,
+                        Quantite_Produit = 50,
+                        ID_CATEGORIE = jouets.ID_CATEGORIE
+                    }
+                );
+                SaveChanges();
+            }
+            
+
         }
 
 

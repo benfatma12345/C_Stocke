@@ -11,6 +11,7 @@ using C_Stocke;
 using C_Stocke.Auth;
 using C_Stocke.Categories;
 using C_Stocke.Clients;
+using C_Stocke.Commandes;
 using C_Stocke.Produits;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -173,6 +174,25 @@ namespace C_Stock
         private void btnCommend_Click(object sender, EventArgs e)
         {
             pnlbtn.Top = btnCommend.Top;
+            // Utiliser Program.ServiceProvider pour acc?der ? l'instance de ServiceProvider
+            var UserCd = Program.ServiceProvider.GetService<UserCommande>();
+
+            if (UserCd == null)
+            {
+                MessageBox.Show("Le service Liste Commande n'a pas pu ?tre trouv?.");
+                return;
+            }
+
+            if (!panlfiche.Controls.Contains(UserCd))
+            {
+                panlfiche.Controls.Add(UserCd);
+                UserCd.Dock = DockStyle.Fill;
+                UserCd.BringToFront();
+            }
+            else
+            {
+                UserCd.BringToFront();
+            }
         }
 
         private void btnUtilisateur_Click(object sender, EventArgs e)
@@ -213,20 +233,13 @@ namespace C_Stock
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+      
         private void btndeconnecter_Click(object sender, EventArgs e)
         {
             desactiverForm();
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+       
     }
 }
 
